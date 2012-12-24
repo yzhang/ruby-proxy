@@ -10,21 +10,11 @@ $MAX_OBJECT_SIZE = 1048576
 $MAX_TIME = 3600
 
 # Request class that holds information to a HTTP request.
-class Request
-    attr_accessor :type, :host, :port, :filename, :version, :timestamp
-
-    def initialize(*args)
-        @type, @host, @port, @filename, @version, @timestamp = *args
-    end
+class Request < Struct.new(:type, :host, :port, :filename, :version, :timestamp)
 end
 
 # CacheLine class that allows us to cache page data.
-class CacheLine
-    attr_accessor :url, :response, :timestamp
-
-    def initialize(*args)
-        @url, @response, @timestamp = *args
-    end
+class CacheLine < Struct.new(:url, :response, :timestamp)
 end
 
 # Proxy method.
