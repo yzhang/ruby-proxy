@@ -11,7 +11,7 @@ be deleted from the cache. The rationale for this is that we assume the user
 would be browsing websites for a short period of time and a one hour threshold
 is a reasonable threshold if the cache would be full.
 
-When forwarding headers, I made sure that the "Host: `<hostname>" request header
+When forwarding headers, I made sure that the "Host: \<hostname\>" request header
 is sent to the server. This avoids any complications if the server uses virtual
 hosting. Also, all requests were forwarded as version HTTP/1.0 even if the
 original request was HTTP/1.1.Since HTTP/1.1 supports persistent connections by
