@@ -1,26 +1,26 @@
 # Ruby Web Proxy Server
 
-This simple Ruby web proxy uses the native Ruby TCPSocket class that is part of
-Ruby's std-lib. The proxy caches web requests by default. It caches information
-from the website you access as long as the cache for that for that request does
-not exceed 1MB. The maximum size of the cache was arbitrarily chosen to be 50MB
-and if the next subsequent web request would cause the cache to exceed the
-maximum cache size of 50MB, we would search through the cache and look for the
-sites that have been in the cache for an hour or more. Such information would
-be deleted from the cache. The rationale for this is that we assume the user
-would be browsing websites for a short period of time and a one hour threshold
-is a reasonable threshold if the cache would be full.
+This simple Ruby web proxy uses the native Ruby `TCPSocket` class that is part
+of Ruby's std-lib. The proxy caches web requests by default. It caches
+information from the website you access as long as the cache for that for that
+request does not exceed 1MB. The maximum size of the cache was arbitrarily
+chosen to be 50MB and if the next subsequent web request would cause the cache
+to exceed the maximum cache size of 50MB, we would search through the cache and
+look for the sites that have been in the cache for an hour or more. Such
+information would be deleted from the cache. The rationale for this is that we
+assume the user would be browsing websites for a short period of time and a one
+hour threshold is a reasonable threshold if the cache would be full.
 
-When forwarding headers, I made sure that the `Host: \<hostname\>` request header
-is sent to the server. This avoids any complications if the server uses virtual
-hosting. Also, all requests were forwarded as version HTTP/1.0 even if the
-original request was HTTP/1.1. Since HTTP/1.1 supports persistent connections by
-default, the server won’t close the connection after it responds to an HTTP/1.1
-request. If the request was forwarded as HTTP/1.0, we are asking the server to
-close the connection after it sends the response. Thus, we can reliably use EOF
-on the server connection to determine the end of the response. Also, I replaced
-all `Connection/Proxy-Connection: [connection-token]` request headers with
-`Connection/Proxy-Connection: close`. All `Keep-Alive: [timeout-interval]`
+When forwarding headers, I made sure that the `Host: \<hostname\>` request
+header is sent to the server. This avoids any complications if the server uses
+virtual hosting. Also, all requests were forwarded as version HTTP/1.0 even if
+the original request was HTTP/1.1. Since HTTP/1.1 supports persistent
+connections by default, the server won’t close the connection after it responds
+to an HTTP/1.1 request. If the request was forwarded as HTTP/1.0, we are asking
+the server to close the connection after it sends the response. Thus, we can
+reliably use EOF on the server connection to determine the end of the response.
+Also, I replaced all `Connection/Proxy-Connection: [connection-token]` request
+headers with `Connection/Proxy-Connection: close`. All `Keep-Alive: [timeout-interval]`
 request headers were removed as well. The reason for this is that some
 misbehaving servers will sometimes use persistent connections even for HTTP/1.0
 requests. You can force the server to close the connection after it has sent the
