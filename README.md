@@ -1,5 +1,5 @@
 # Ruby Web Proxy Server
-a
+
 This simple Ruby web proxy uses the native Ruby `TCPSocket` class that is part
 of Ruby's std-lib. The proxy caches web requests by default. It caches
 information from the website you access as long as the cache for that for that
