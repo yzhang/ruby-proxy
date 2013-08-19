@@ -20,7 +20,7 @@ end
 # Proxy method.
 def crappy_proxy(port)
     # Open a socket to the client - in this case, the browser.
-    server = TCPServer.open("localhost", port)
+    server = TCPServer.open("0.0.0.0", port)
     #puts "Server Started"
 
     cache = Hash.new()
